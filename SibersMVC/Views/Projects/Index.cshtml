@@ -1,0 +1,124 @@
+﻿@model IEnumerable<SibersDAL.Models.Project>
+
+@{
+    ViewBag.Title = "Projects";
+}
+<div class="well well-sm"><h1>Projects</h1></div>
+<p>
+    <a href="@Url.Action("Create")">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Create a new Project
+    </a>
+</p>
+<hr />
+<div class="form-group form-inline">
+    @using (Html.BeginForm("Index", "Projects", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group col-md-4">
+            @Html.Label("Start Date", htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.Editor("StartDate", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("StartDate", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.Label("End Date", htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-7">
+                @Html.Editor("EndDate", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("EndDate", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.Hidden("sortOrder", new { sortOrder = ViewBag.PrioritySortParm });
+
+        <div class="form-group col-md-2">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+<table class="table table-striped table-responsive table-hover table-bordered">
+    <caption>Projects List</caption>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Contractor.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.ActionLink("Priority", "Index", new { sortOrder=ViewBag.PrioritySortParm, startDate=ViewBag.StartDateParam, endDate=ViewBag.EndDateParam })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contractor.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manager.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Priority)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", new { id=item.Id})">
+                <span class="glyphicon glyphicon-edit"></span>&nbsp;Edit
+            </a>
+            &nbsp;|&nbsp;
+            <a href="@Url.Action("Details", new { id=item.Id})">
+                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Details
+            </a>
+            &nbsp;|&nbsp;
+            <a href="@Url.Action("Delete", new { id=item.Id})">
+                <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+            </a>
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryUI")
+}

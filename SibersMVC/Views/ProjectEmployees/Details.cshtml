@@ -1,0 +1,42 @@
+﻿@model SibersDAL.Models.ProjectEmployees
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="well well-sm"><h1>Details</h1></div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Edit", new { id=Model.Id})">
+        <span class="glyphicon glyphicon-edit"></span>&nbsp;Edit
+    </a>
+    &nbsp;|&nbsp;
+    <a href="@Url.Action("Delete", new { id=Model.Id})">
+        <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+    </a>
+    &nbsp;|&nbsp;
+    <a href="@Url.Action("Index")">
+        <span class="glyphicon glyphicon-list"></span>&nbsp;Back to List
+    </a>
+</p>
